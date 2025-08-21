@@ -10,3 +10,18 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id Int
+
+  name String
+  cpf String
+  email String
+  pass String
+  phone String
+  signature Float
+  birth Date
+
+  createdAt DateTime
+  updatedAt DateTime
+}
