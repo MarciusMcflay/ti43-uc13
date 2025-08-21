@@ -12,18 +12,19 @@ datasource db {
 }
 
 model Habit{
-  id Int
+  id Int @id @default( autoincrement() )
 
   name String
   description String
-  urlImage String
-  isActive Boolean
+  urlImage String @map("url_image")
+  isActive Boolean  @map("is_active")
 
-  createdAt DateTime
-  updatedAt DateTime
+  createdAt DateTime @map("created_at") @default( now() )
+  updatedAt DateTime @map("updated_at") @updatedAt
 }
+
 model User {
-  id Int
+  id Int @id @default( autoincrement() )
 
   name String
   cpf String
@@ -33,6 +34,6 @@ model User {
   signature Float
   birth Date
 
-  createdAt DateTime
-  updatedAt DateTime
+  createdAt DateTime @map("created_at") @default( now() )
+  updatedAt DateTime  @map("updated_at") @updatedAt
 }
