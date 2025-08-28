@@ -1,39 +1,42 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
-}
-
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
-model Habit{
-  id Int @id @default( autoincrement() )
-
-  name String
-  description String
-  urlImage String @map("url_image")
-  isActive Boolean  @map("is_active")
-
-  createdAt DateTime @map("created_at") @default( now() )
-  updatedAt DateTime @map("updated_at") @updatedAt
+generator client {
+  provider = "prisma-client-js"
 }
 
 model User {
-  id Int @id @default( autoincrement() )
+  id         Int      @id @default(autoincrement())
+  name       String
+  cpf        String   @unique
+  email      String   @unique
+  pass       String
+  phone      String
+  signature  Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-  name String
-  cpf String
-  email String
-  pass String
-  phone String
-  signature Float
-  birth Date
+  // quem carrega o 1 tem o vetor
+  habits     Habit[]
 
-  createdAt DateTime @map("created_at") @default( now() )
-  updatedAt DateTime  @map("updated_at") @updatedAt
+  @@map("users")
+}
+
+model Habit {
+  id         Int      @id @default(autoincrement())
+  name       String
+  description String
+  urlImage   String
+  isActive   Boolean
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // FK → User
+  userId     Int      @map("user_id")
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  //variavel  Model  relação (FK, PK, ação)
+
+  @@map("habits")
 }
