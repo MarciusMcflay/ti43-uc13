@@ -2,8 +2,8 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 
-import userRoutes from './routes/user';
-import habitRoutes from './routes/habit';
+import userRoutes from './routes/user.js';
+import habitRoutes from './routes/habit.js';
 
 const app = express();
 app.use(cors());
