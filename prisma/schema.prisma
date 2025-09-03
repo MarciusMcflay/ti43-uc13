@@ -7,6 +7,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
+//Marcius
 model User {
   id         Int      @id @default(autoincrement())
   name       String
@@ -18,12 +19,15 @@ model User {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  // quem carrega o 1 tem o vetor
+  // quem carrega o 1 tem o vetor para muitos
   habits     Habit[]
+  // quem carrega o 1 do um pra um
+  //habits     Habit?
 
   @@map("users")
 }
 
+//Aula
 model Habit {
   id         Int      @id @default(autoincrement())
   name       String
