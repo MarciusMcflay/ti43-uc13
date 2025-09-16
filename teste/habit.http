@@ -1,0 +1,10 @@
+POST http://localhost:3000/habits HTTP/1.1
+content-type: application/json
+
+{
+    "name":"teste",
+    "description":"teste",
+    "urlImage":"teste",
+    "isActive":true,
+    "userId":1
+}
