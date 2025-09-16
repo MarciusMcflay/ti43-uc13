@@ -1,5 +1,6 @@
+### Criando um usuario
 POST http://localhost:3000/users HTTP/1.1
-content-type: application/json
+Content-Type: application/json
 
 {
     "name" : "Marcius",
@@ -10,3 +11,16 @@ content-type: application/json
     "data":"aaaa-mm-dd",
     "signature":19.99
 }
+
+### Ler todos usuarios
+GET http://localhost:3000/users HTTP/1.1
+Content-Type: application/json
+
+
+### Ler todos usuarios se chama marcius
+GET http://localhost:3000/users?name=marcius HTTP/1.1
+Content-Type: application/json
+
+### Ler todos usuarios busca pelo cpf
+GET http://localhost:3000/users?name=marcius&cpf=999.999.999-99 HTTP/1.1
+Content-Type: application/json
