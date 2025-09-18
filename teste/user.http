@@ -28,3 +28,18 @@ Content-Type: application/json
 ### Ler um usuario pelo id
 GET http://localhost:3000/users/99
 Content-Type: application/json
+
+
+### Delete um usuario pelo id
+DELETE http://localhost:3000/users/99
+Content-Type: application/json
+
+
+### Atualizar um usuario pelo id
+PUT http://localhost:3000/users/99
+Content-Type: application/json
+
+{
+    "name" : "Marcius Leandro Junior",
+    "email" : "marcius.ljunior@sp.senac.br"
+}
