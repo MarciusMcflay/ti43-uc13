@@ -1,3 +1,4 @@
+### cria um habito
 POST http://localhost:3000/habits HTTP/1.1
 content-type: application/json
 
@@ -8,3 +9,39 @@ content-type: application/json
     "isActive":true,
     "userId":1
 }
+
+### recupera todos os habitos
+GET http://localhost:3000/habits HTTP/1.1
+content-type: application/json
+
+### recupera todos os habitos com filtros
+GET http://localhost:3000/habits?name=leitura HTTP/1.1
+content-type: application/json
+
+
+### recupera todos os habitos com filtros sapos na lagoa
+GET http://localhost:3000/habits?isActive=false HTTP/1.1
+content-type: application/json
+
+### recupera todos os habitos com filtros sapos nas vitoria regias
+GET http://localhost:3000/habits?isActive=true HTTP/1.1
+content-type: application/json
+
+### recupera um unico habito pelo params id informado
+GET http://localhost:3000/habits/1 HTTP/1.1
+content-type: application/json
+
+### edita um habito pelo params id informado
+PUT http://localhost:3000/habits/1 HTTP/1.1
+content-type: application/json
+
+{
+    "name":"teste",
+    "description":"teste",
+    "urlImage":"teste",
+    "isActive":true
+}
+
+### apaga um unico habito pelo params id informado
+DELETE http://localhost:3000/habits/1 HTTP/1.1
+content-type: application/json

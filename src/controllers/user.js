@@ -1,6 +1,41 @@
 import prisma from '../prisma.js';
 
-
+function validaCPF(cpf) {
+    if (cpf === undefined || cpf === null) return false;
+  
+    // Normaliza: mantém apenas dígitos
+    const str = String(cpf).replace(/\D/g, '');
+  
+    // Deve ter 11 dígitos
+    if (str.length !== 11) return false;
+  
+    // Rejeita CPFs compostos por todos os mesmos dígitos (ex: "00000000000")
+    if (/^(\d)\1{10}$/.test(str)) return false;
+  
+    const calcDigito = (base, pesoInicial) => {
+      // base: array de dígitos (como números)
+      // pesoInicial: peso do primeiro dígito (10 para o 1º dígito verificador, 11 para o 2º)
+      let soma = 0;
+      for (let i = 0; i < base.length; i++) {
+        soma += base[i] * (pesoInicial - i);
+      }
+      const resto = soma % 11;
+      return resto < 2 ? 0 : 11 - resto;
+    };
+  
+    // converte em array de números
+    const digits = str.split('').map(d => parseInt(d, 10));
+  
+    // Primeiro dígito verificador (usar os 9 primeiros dígitos, pesos 10..2)
+    const d1 = calcDigito(digits.slice(0, 9), 10);
+    if (d1 !== digits[9]) return false;
+  
+    // Segundo dígito verificador (usar os 9 primeiros + d1, pesos 11..2)
+    const d2 = calcDigito(digits.slice(0, 9).concat(d1), 11);
+    if (d2 !== digits[10]) return false;
+  
+    return true;
+  }
 
 //asincrona nome_da_função(recebendo, responder, proximo)
 export const UserController = {
@@ -8,6 +43,10 @@ export const UserController = {
     async store(req, res, next){
         try{
             const { name, cpf, email, pass, phone, signature } = req.body;
+
+            if(!validaCPF(cpf)){
+                res.status(401).json({'erro':'CPF invalido'})
+            }
 
             const u = await prisma.user.create({
                 data: { 

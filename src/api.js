@@ -20,6 +20,11 @@ app.use((err, _req, res, _next) => {
             error: 'Registro duplicado (unique)' 
         });
     } 
+    if (err.code === 'P2003'){
+         return res.status(404).json({
+            error: 'A chave estrangeira não pode ser excluida' 
+        });
+    } 
     if (err.code === 'P2025'){
          return res.status(404).json({
             error: 'Registro não encontrado' 
