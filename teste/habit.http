@@ -36,10 +36,7 @@ PUT http://localhost:3000/habits/1 HTTP/1.1
 content-type: application/json
 
 {
-    "name":"teste",
-    "description":"teste",
-    "urlImage":"teste",
-    "isActive":true
+    "name":"Estudar"
 }
 
 ### apaga um unico habito pelo params id informado

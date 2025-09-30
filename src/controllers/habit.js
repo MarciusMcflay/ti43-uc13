@@ -57,7 +57,7 @@ export const HabitController = {
             const id = Number(req.params.id);
 
             const created = await prisma.habit.findFirstOrThrow({
-                where: id
+                where: {id: id}
             });
 
             if(!created){
@@ -82,7 +82,7 @@ export const HabitController = {
             if(req.body.isActive) body.isActive = req.body.isActive;
 
             const created = await prisma.habit.update({
-                where: id,
+                where: {id: id},
                 data: body
             });
 
