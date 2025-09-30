@@ -1,3 +1,5 @@
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import prisma from '../prisma.js';
 
 function validaCPF(cpf) {
@@ -39,6 +41,33 @@ function validaCPF(cpf) {
 
 //asincrona nome_da_função(recebendo, responder, proximo)
 export const UserController = {
+    
+    async login(req, res, next) {
+        try {
+          const { email, senha } = req.body;
+
+          let u = await prisma.user.findFirst({
+            where: {email: email}
+          })
+
+          if(!u) return res.status(404).json({error: "Não tem um usuario com esse email"});
+    
+          const ok = await bcrypt.compare(senha, u.pass);
+          if (!ok) return res.status(401).json({ erro: "Credenciais inválidas" });
+
+          // Gera JWT (payload mínimo)
+          const token = jwt.sign(
+            { sub: u.id, email: u.email, name: u.name },
+            process.env.JWT_SECRET,
+            { expiresIn: '8h' }
+          );
+    
+          return res.json({ token });
+        } catch (e) { 
+            next(e); 
+        }
+    },
+
     //C - CREATE, INSERT, POST, SET, STORE
     async store(req, res, next){
         try{
@@ -48,12 +77,14 @@ export const UserController = {
                 res.status(401).json({'erro':'CPF invalido'})
             }
 
+            const hash = await bcrypt.hash(pass, 10);
+
             const u = await prisma.user.create({
                 data: { 
                     name, 
                     cpf, 
                     email, 
-                    pass, 
+                    pass: hash, 
                     phone, 
                     signature
                 }

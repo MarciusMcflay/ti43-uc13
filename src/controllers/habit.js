@@ -3,7 +3,7 @@ import prisma from '../prisma.js'
 export const HabitController = {
     async store(req, res, next) {
         try {
-            const { name, description, urlImage, isActive, userId } = req.body;
+            const { name, description, urlImage, isActive } = req.body;
             
             if(description.length > 244){
                 res.status(401).json({'erro':"Quantidade de caracteres da descrição ultrapassa 244."})
@@ -11,7 +11,7 @@ export const HabitController = {
             }
 
             let u = await prisma.user.findFirst({
-                where: {id: Number(userId)}
+                where: {id: Number(req.logado.id)}
             });
 
             if(!u){
@@ -21,13 +21,15 @@ export const HabitController = {
                 return
             }
 
+            console.log(Number(req.logado.id))
+
             const created = await prisma.habit.create({
                 data: {
                     name,
                     description,
                     urlImage,
                     isActive: Boolean(isActive),
-                    userId: Number(userId)
+                    userId: Number(req.logado.id)
                 }
             });
             res.status(201).json(created);
@@ -42,6 +44,8 @@ export const HabitController = {
 
             if(req.query.name) where.name = {contains: req.query.name};
             if(req.query.isActive) where.isActive = Boolean(req.query.isActive);
+
+            where.userId = req.logado.id
 
             const created = await prisma.habit.findMany({
                 where: where

@@ -1,10 +1,22 @@
+npm install express prisma @prisma/client dotenv
+
 npx prisma generate
 
 npx prisma migrate dev --name init
 
 npx prisma db push --force-reset
 
-npx prisma studio    
+npx prisma studio   
+
+npm install bcrypt express-session nodemailer uuid
+npm install jsonwebtoken
+
+
+
+
+
+
+
 
 
 

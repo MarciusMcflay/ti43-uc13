@@ -1,39 +1,46 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidGVzdGVzZW5oYUB0ZXN0ZS5jb20iLCJuYW1lIjoiTWFyY2l1cyIsImlhdCI6MTc1OTI1OTcyMywiZXhwIjoxNzU5Mjg4NTIzfQ.QN0TfaNrwdP_NxRqB4_yLBZ6sT9VgZU-raeeqZOA9QU
+
 ### cria um habito
 POST http://localhost:3000/habits HTTP/1.1
 content-type: application/json
+Authorization: Bearer {{token}}
 
 {
-    "name":"teste",
+    "name":"só do user 3",
     "description":"teste",
     "urlImage":"teste",
-    "isActive":true,
-    "userId":1
+    "isActive":true
 }
 
 ### recupera todos os habitos
 GET http://localhost:3000/habits HTTP/1.1
 content-type: application/json
+Authorization: Bearer {{token}}
 
 ### recupera todos os habitos com filtros
 GET http://localhost:3000/habits?name=leitura HTTP/1.1
 content-type: application/json
-
+Authorization: Bearer {{token}}
 
 ### recupera todos os habitos com filtros sapos na lagoa
 GET http://localhost:3000/habits?isActive=false HTTP/1.1
 content-type: application/json
+Authorization: Bearer {{token}}
 
 ### recupera todos os habitos com filtros sapos nas vitoria regias
 GET http://localhost:3000/habits?isActive=true HTTP/1.1
 content-type: application/json
+Authorization: Bearer {{token}}
 
 ### recupera um unico habito pelo params id informado
 GET http://localhost:3000/habits/1 HTTP/1.1
 content-type: application/json
+Authorization: Bearer {{token}}
 
 ### edita um habito pelo params id informado
 PUT http://localhost:3000/habits/1 HTTP/1.1
 content-type: application/json
+Authorization: Bearer {{token}}
 
 {
     "name":"Estudar"
@@ -42,3 +49,4 @@ content-type: application/json
 ### apaga um unico habito pelo params id informado
 DELETE http://localhost:3000/habits/1 HTTP/1.1
 content-type: application/json
+Authorization: Bearer {{token}}
