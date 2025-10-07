@@ -2,9 +2,9 @@ npm install express prisma @prisma/client dotenv
 
 npx prisma generate
 
-npx prisma migrate dev --name init
+npx prisma migrate dev --name nome_da_atualizacao
 
-npx prisma db push --force-reset
+npx prisma db push
 
 npx prisma studio   
 
