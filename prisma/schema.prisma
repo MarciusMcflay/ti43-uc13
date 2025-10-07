@@ -24,6 +24,9 @@ model User {
   // quem carrega o 1 do um pra um
   //habits     Habit?
 
+  groupId Int? @map("group_id")
+  group   Group?     @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
   @@map("users")
 }
 
@@ -43,4 +46,23 @@ model Habit {
   //variavel  Model  relação (FK, PK, ação)
 
   @@map("habits")
+}
+
+model Role{
+  id         Int      @id @default(autoincrement())
+  name       String
+  description String
+  url String
+
+  groupId Int @map("group_id")
+  group   Group     @relation(fields: [groupId], references: [id], onDelete: Cascade)
+}
+
+model Group{
+  id         Int      @id @default(autoincrement())
+  name       String
+  description String
+
+  roles Role[]
+  users User[]
 }

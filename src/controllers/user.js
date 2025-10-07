@@ -41,7 +41,13 @@ function validaCPF(cpf) {
 
 //asincrona nome_da_função(recebendo, responder, proximo)
 export const UserController = {
-    
+    async  logout(req, res, _next) {
+        req.session.destroy((err) => {
+            if (err) return res.status(500).json({ erro: 'Erro ao sair' });
+            res.clearCookie('connect.sid');
+            res.status(200).json({ mensagem: 'Logout realizado com sucesso' });
+        });
+    },  
     async login(req, res, next) {
         try {
           const { email, senha } = req.body;
@@ -69,33 +75,33 @@ export const UserController = {
     },
 
     //C - CREATE, INSERT, POST, SET, STORE
-    async store(req, res, next){
-        try{
-            const { name, cpf, email, pass, phone, signature } = req.body;
+async store(req, res, next){
+    try{
+        const { name, cpf, email, pass, phone, signature } = req.body;
 
-            if(!validaCPF(cpf)){
-                res.status(401).json({'erro':'CPF invalido'})
-            }
-
-            const hash = await bcrypt.hash(pass, 10);
-
-            const u = await prisma.user.create({
-                data: { 
-                    name, 
-                    cpf, 
-                    email, 
-                    pass: hash, 
-                    phone, 
-                    signature
-                }
-            });
-
-            //respondendo 201-criado encapsulando_no_formato_json(u)
-            res.status(201).json(u);
-        }catch(err){
-            next(err);
+        if(!validaCPF(cpf)){
+            res.status(401).json({'erro':'CPF invalido'})
         }
-    },
+
+        const hash = await bcrypt.hash(pass, 10);
+
+        const u = await prisma.user.create({
+            data: { 
+                name, 
+                cpf, 
+                email, 
+                pass: hash, 
+                phone, 
+                signature
+            }
+        });
+
+        //respondendo 201-criado encapsulando_no_formato_json(u)
+        res.status(201).json(u);
+    }catch(err){
+        next(err);
+    }
+},
 
     //R - READ, SELECT, GET, findMany
     async index(req, res, _next){
