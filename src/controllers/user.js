@@ -92,7 +92,7 @@ async store(req, res, next){
                 email, 
                 pass: hash, 
                 phone, 
-                signature
+                signature:  Number(signature)
             }
         });
 

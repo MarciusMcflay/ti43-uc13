@@ -91,8 +91,20 @@ async function main() {
 
   // 4) (Opcional) Vincula Users a Groups
   // Se já existir User com id 1 e 2, por exemplo:
+  const hash = await bcrypt.hash("123456", 10);
+  const u = await prisma.user.create({
+    data: { 
+          name: "Marcius Leandro Junior", 
+          cpf:"3873279.078-13", 
+          email:"jhorge.marcius@gmail.com", 
+          pass: hash, 
+          phone: "16981354817", 
+          signature:19.90
+      }
+  });
+
   try {
-    await connectUserToGroup({ userId: 1, groupId: groups['Docentes'].id });
+    await connectUserToGroup({ userId: u.id, groupId: groups['Docentes'].id });
   } catch {}
 
   console.log('Seed concluído com Roles, Groups, RoleGroup e GroupUser');
