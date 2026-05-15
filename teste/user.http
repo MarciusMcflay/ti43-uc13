@@ -1,15 +1,15 @@
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidGVzdGVzZW5oYUB0ZXN0ZS5jb20iLCJuYW1lIjoiTWFyY2l1cyIsImlhdCI6MTc1OTI1OTcyMywiZXhwIjoxNzU5Mjg4NTIzfQ.QN0TfaNrwdP_NxRqB4_yLBZ6sT9VgZU-raeeqZOA9QU
 
 ### Criando um usuario
-POST http://localhost:3000/users HTTP/1.1
+POST https://ti43-uc13.onrender.com/users HTTP/1.1
 Content-Type: application/json
 
 {
-    "name" : "Marcius",
-    "cpf" : "387.279.078-13",
-    "email":"testesenha@teste.com",
+    "name" : "Lucas",
+    "cpf" : "651.549.680-00",
+    "email":"tes65154968000@teste.com",
     "pass" :"123456",
-    "phone":"16 98135-4817",
+    "phone":"18 98136-4817",
     "data":"1990-03-01",
     "signature":19.99
 }

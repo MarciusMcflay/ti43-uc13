@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-export function verificaToken(req, res, next) {
+export function auth(req, res, next) {
   const auth = req.headers.authorization || "";
   const token = auth.startsWith("Bearer ") ? auth.slice(7) : null;
 
@@ -9,13 +9,14 @@ export function verificaToken(req, res, next) {
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     // convenção: sub = id do usuário
-    req.logado = { 
-        id: payload.sub,
-        email: payload.email, 
-        name: payload.name 
+    req.logeded = {
+      id: payload.sub,
+      rule: payload.rule,
+      email: payload.email,
+      name: payload.name
     };
     return next();
   } catch (e) {
-    return res.status(403).json({ erro: "Token inválido ou expirado" });
+    return res.status(403).json({ erro: e.message });
   }
 }
